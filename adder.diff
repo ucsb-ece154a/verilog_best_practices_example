@@ -1,0 +1,19 @@
+15c15,16
+< always @(f_i or a_i or b_i) begin
+---
+> always @ * begin
+>   y_next = {WIDTH{1'bx}};
+18,19c19,20
+<     adder_1sComplement: y_next = a_i + b_i + a_i[WIDTH-1] + b_i[WIDTH-1];
+<     adder_2sComplement: y_next <= a_i + b_i;
+---
+>     adder_1sComplement: y_next = a_i + b_i + {{(WIDTH-1){1'b0}}, a_i[WIDTH-1]} + {{(WIDTH-1){1'b0}}, b_i[WIDTH-1]};
+>     adder_2sComplement: y_next = a_i + b_i;
+32,35c33,34
+< end
+< always @ (posedge clk) begin
+<   if (!rst)
+<     y_o = y_next;
+---
+>   else
+>     y_o <= y_next;
