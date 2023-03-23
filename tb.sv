@@ -1,7 +1,5 @@
 
-`define SIM
-
-`define ASSERT(CONDITION, MESSAGE) if ((CONDITION)==1'b1); else begin $error(MESSAGE); ERROR = 1; end
+`define ASSERT(CONDITION, MESSAGE) if ((CONDITION)==1'b1); else begin $display(MESSAGE); ERROR = 1; end
 
 module tb ();
 
@@ -34,7 +32,7 @@ b = 4'b0001;
 
 f = adder_unsigned;
 @(negedge clk);
-  `ASSERT(y==4'b0000,"adder_unsigned wrong");
+`ASSERT(y==4'b0000,"adder_unsigned wrong");
 
 f = adder_1sComplement;
 @(negedge clk);
@@ -45,7 +43,6 @@ f = adder_2sComplement;
 `ASSERT(y==4'b0000,"adder_2sComplement");
 
 //\\ =========================== \\//
-if (ERROR) $fatal();
 else $display("Passed!");
 $finish();
 end

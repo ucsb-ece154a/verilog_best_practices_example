@@ -10,28 +10,25 @@ module adder #(
 
 `include "define.vh"
 
-reg [WIDTH-1:0] y_next;
+reg [WIDTH-1:0] y_d, y_q;
 
-always @ * begin
-  y_next = {WIDTH{1'bx}};
+always @* begin
+  y_d = {WIDTH{1'bx}};
   case (f_i)
-    adder_unsigned:     y_next = a_i + b_i;
-    adder_1sComplement: y_next = a_i + b_i + {{(WIDTH-1){1'b0}}, a_i[WIDTH-1]} + {{(WIDTH-1){1'b0}}, b_i[WIDTH-1]};
-    adder_2sComplement: y_next = a_i + b_i;
-    default:
-      `ifdef SIM
-      $warning("Unknown adder function: %h", f_i);
-      `else
-      ;
-      `endif
+    adder_unsigned:     y_d = a_i + b_i;
+    adder_1sComplement: y_d = a_i + b_i + {{(WIDTH-1){1'b0}}, a_i[WIDTH-1]} + {{(WIDTH-1){1'b0}}, b_i[WIDTH-1]};
+    adder_2sComplement: y_d = a_i + b_i;
+    default: $display("Warning: Unknown adder function: %h", f_i);
   endcase
 end
 
-always @ (posedge clk) begin
+assign y_o = y_q;
+
+always @(posedge clk) begin
   if (rst)
-    y_o <= 0;
+    y_q <= 0;
   else
-    y_o <= y_next;
+    y_q <= y_d;
 end
 
 endmodule
