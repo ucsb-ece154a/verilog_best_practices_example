@@ -14,7 +14,7 @@ This repository gives an example of how to fix common Verilog design issues. `"a
 ## Bad things
 
 * `<=` should only be used in flip-flop logic blocks, `=` should only be used in combinational logic blocks.
-* `y_d` is driven in two separate `always` blocks. A net should only be driven by one.
+* `y_q` is driven in two separate `always` blocks. A net should only be driven by one.
 * Arithmetic should only occur between nets of the same bit-width.
 * A latch is inferred in the `always @ *` block because `y_d` will not be set on undefined `f_i` values. Latches will result in an error.
 * Synthesizable `always` blocks must only either have `@*` or `@(posedge clk)`/`@(negedge clk)`. To create combinational logic, use `always @*`; to create combinational logic, use `always @(posedge clk)`/`always @(negedge clk)`.
