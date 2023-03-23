@@ -8,7 +8,7 @@ This repository gives an example of how to fix common Verilog design issues. `"a
 * Inputs and outputs have suffixes `_i` and `_o` respectively. (`clk` and `rst` are always assumed to be inputs, so `_i` is not necessary.)
 * Parameterized modules allow customization at compile time.
 * Separate file for adder definitions so function codes can be used by other modules.
-* Flip-flop logic and combinational logic occur in separate procedural blocks.
+* Flip-flop updates and combinational logic occur in separate procedural blocks.
 * The case statement has a default case that, only in simulation, gives a warning on unknown function codes.
 
 ## Bad things
@@ -17,7 +17,7 @@ This repository gives an example of how to fix common Verilog design issues. `"a
 * `y_q` is driven in two separate `always` blocks. A net should only be driven by one.
 * Arithmetic should only occur between nets of the same bit-width.
 * A latch is inferred in the `always @ *` block because `y_d` will not be set on undefined `f_i` values. Latches will result in an error.
-* Synthesizable `always` blocks must only either have `@*` or `@(posedge clk)`/`@(negedge clk)`. To create combinational logic, use `always @*`; to create combinational logic, use `always @(posedge clk)`/`always @(negedge clk)`.
+* Synthesizable `always` blocks must only either have `@*` or `@(posedge clk)`/`@(negedge clk)`. To create combinational logic, use `always @*`; to update flip-flops, use `always @(posedge clk)`/`always @(negedge clk)`.
 
 ## Online Resources
 
